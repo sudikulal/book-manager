@@ -9,6 +9,9 @@ router.get('/books', bookController.getAllBooks);
 router.get('/books/:id', bookController.getBookById);
 
 // Route to update a book's details
+router.post('/books', bookController.addBook);
+
+// Route to update a book's details
 router.put('/books/:id', bookController.updateBook);
 
 // Route to delete a book by its ID

@@ -1,4 +1,4 @@
-const Book = require("../models/Book"); // Assuming you have a Book model
+const Book = require("../models/book.model.js");
 
 // Controller function to add a new book
 exports.addBook = async (req, res) => {
@@ -31,36 +31,37 @@ exports.addBook = async (req, res) => {
 exports.getAllBooks = async (req, res) => {
   try {
     const books = await Book.find();
-    res.json(books);
+    res.json({ message: "success", books });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error fetching books' });
+    res.status(500).json({ message: "Error fetching books" });
   }
 };
 
 exports.getBookById = async (req, res) => {
   try {
     const book = await Book.findById(req.params.id);
-    if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
-    }
-    res.json(book);
+    if (!book) return res.status(404).json({ message: "Book not found" });
+
+    res.json({ message: "success", book });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error fetching the book' });
+    res.status(500).json({ message: "Error fetching the book" });
   }
 };
 
 exports.updateBook = async (req, res) => {
   try {
-    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedBook) {
-      return res.status(404).json({ message: 'Book not found' });
-    }
-    res.json({ message: 'Book updated successfully', book: updatedBook });
+    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updatedBook)
+      return res.status(404).json({ message: "Book not found" });
+
+    res.json({ message: "Book updated successfully", book: updatedBook });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error updating the book' });
+    res.status(500).json({ message: "Error updating the book" });
   }
 };
 
@@ -68,12 +69,12 @@ exports.updateBook = async (req, res) => {
 exports.deleteBook = async (req, res) => {
   try {
     const deletedBook = await Book.findByIdAndRemove(req.params.id);
-    if (!deletedBook) {
-      return res.status(404).json({ message: 'Book not found' });
-    }
-    res.json({ message: 'Book deleted successfully', book: deletedBook });
+    if (!deletedBook)
+      return res.status(404).json({ message: "Book not found" });
+
+    res.json({ message: "Book deleted successfully", book: deletedBook });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error deleting the book' });
+    res.status(500).json({ message: "Error deleting the book" });
   }
 };
